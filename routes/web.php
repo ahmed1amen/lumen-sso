@@ -13,22 +13,21 @@
 |
 */
 
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Session;
-
 
 $router->get('/', function (\Illuminate\Http\Request $request) {
 
-//media/ahmed/f/Laravel-Projects/MediaGate/Microservices/sso/app/config/app.php
-//media/ahmed/f/Laravel-Projects/MediaGate/Microservices/sso/config/app.php
-  Session::put('name', 'Lumen-Session');
-    return response()->json([
-        'session.name'
-    ]);
+
+    $new=\App\Models\User::find(1);
+
+
+    return response()->json($new->createToken('My Token', [
+        'place-orders'
+    ])->toArray());
+
+
 });
 
 $router->get('/session', function (\Illuminate\Http\Request $request) {
-
     return response()->json([
         'session.name' => $request->session()->get('name'),
     ]);
