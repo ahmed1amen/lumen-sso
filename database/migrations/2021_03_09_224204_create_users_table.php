@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('sub')->nullable();
+            $table->string('uuid');
             $table->string('name')->nullable();
             $table->string('given_name')->nullable();
             $table->string('family_name')->nullable();
@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->nullable();
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->timestamps();
+            $table->index(['id','uuid']);
         });
     }
 

@@ -13,6 +13,23 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Session;
 
+
+$router->get('/', function (\Illuminate\Http\Request $request) {
+
+//media/ahmed/f/Laravel-Projects/MediaGate/Microservices/sso/app/config/app.php
+//media/ahmed/f/Laravel-Projects/MediaGate/Microservices/sso/config/app.php
+  Session::put('name', 'Lumen-Session');
+    return response()->json([
+        'session.name'
+    ]);
+});
+
+$router->get('/session', function (\Illuminate\Http\Request $request) {
+
+    return response()->json([
+        'session.name' => $request->session()->get('name'),
+    ]);
 });

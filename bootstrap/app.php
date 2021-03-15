@@ -61,6 +61,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('session');
 $app->configure('database');
 $app->configure('auth');
 
@@ -75,9 +76,10 @@ $app->configure('auth');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+ $app->middleware([
+
+     \Illuminate\Session\Middleware\StartSession::class,
+ ]);
 
  $app->routeMiddleware([
      'auth' => App\Http\Middleware\Authenticate::class,
@@ -102,6 +104,13 @@ $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
+$app->singleton(Illuminate\Session\SessionManager::class, function () use ($app) {
+    return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session');
+});
+
+$app->singleton('session.store', function () use ($app) {
+    return $app->loadComponent('session', Illuminate\Session\SessionServiceProvider::class, 'session.store');
+});
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
