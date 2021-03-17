@@ -15,16 +15,8 @@
 
 
 $router->get('/', function (\Illuminate\Http\Request $request) {
-
-
     $new=\App\Models\User::find(1);
-
-
-    return response()->json($new->createToken('My Token', [
-        'place-orders'
-    ])->toArray());
-
-
+    return response()->json($new->createToken('My Token' ));
 });
 
 $router->get('/session', function (\Illuminate\Http\Request $request) {
